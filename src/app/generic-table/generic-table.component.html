@@ -1,0 +1,209 @@
+<div class="bg-[#FFFFFF] rounded-[7px] border p-0">
+  <div class="max-w-screen-full mx-auto">
+    <div class="p-4 w-full">
+      @if (tableHeader) {
+      <h2 class="text-center">{{ tableHeader }}</h2>
+      }
+      <div
+        class="flex xs:flex-col sm:flex-row justify-between w-full mb-8 mt-4"
+      >
+        <div
+          class="flex xs:order-2 xs:pt-1 sm:pt-0 sm:order-1 w-full items-center space-x-2"
+        >
+          <div class="search-wrapper xs:w-full sm:w-auto sm:min-w-[105px]">
+            <i class="material-icons flex-[0.1]">search</i>
+            <input
+              (keyup)="applyFilter($event)"
+              placeholder="Search"
+              class="search-input"
+            />
+          </div>
+        </div>
+        <!-- <h2 class="text-center">{{ tableHeader }}</h2> -->
+        <div class="flex xs:order-1 w-full sm:order-2 space-x-2 items-center">
+          <div class="flex w-full justify-end items-center space-x-2 pr-2">
+            @if (enableAddButton) {
+            <div class="flex items-center space-x-2">
+              <button
+                (click)="addData()"
+                mat-stroked-button
+                class="table-action"
+              >
+                <i class="material-icons">add</i>
+                <span>Add</span>
+              </button>
+            </div>
+            }
+            <button
+              (click)="
+                printTable(
+                  exportTable,
+                  tableHeader,
+                  excludedColumnsIndexWhileExportingTable
+                )
+              "
+              mat-button
+              class="table-action"
+            >
+              <i class="material-icons">print</i>
+              <span>Print</span>
+            </button>
+            <button (click)="exportToCSV()" mat-button class="table-action">
+              <mat-icon class="material-icons">file_download</mat-icon>
+              <span>Excel</span>
+            </button>
+            <button
+              (click)="
+                copyTable(exportTable, excludedColumnsIndexWhileExportingTable)
+              "
+              mat-button
+              class="table-action"
+            >
+              <i class="material-icons">content_copy</i>
+              <span>Copy</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="overflow-x-auto overflow-y-hidden">
+        <table
+          #exportTable
+          matSort
+          (matSortChange)="sortData($event)"
+          id="exportTable"
+          class="min-w-full bg-[#FFFFFF] !text-sm shadow-md"
+        >
+          <thead class="h-[56px] bg-[#F7F7F8]">
+            <tr>
+              <th
+                class="px-4 text-center capitalize font-medium tracking-wider"
+              >
+                S/N
+              </th>
+              @for (h of columnList; track h.header) {
+              <th
+                scope="col"
+                class="py-1 px-6 font-medium tracking-wider w-auto capitalize"
+              >
+                <div class="flex flex-col">
+                  <span class="" [mat-sort-header]="h.columnDef"
+                    >{{ h.header }}
+                  </span>
+                  <select
+                    *ngIf="
+                      h.type === 'status'
+                    "
+                    [(ngModel)]="filters[h.columnDef]"
+                    (change)="filterTable()"
+                    class="bg-[#F7F7F8] appearance-auto cursor-pointer !text-[12px] outline-none border-t-[1px] border-r-[1px] border-l-[1px]"
+                  >
+                    <option value=""></option>
+                    <option
+                      *ngFor="let value of getUniqueValues(h.columnDef)"
+                      [value]="value"
+                    >
+                      {{ value }}
+                    </option>
+                  </select>
+                </div>
+              </th>
+              } @if(actionMenu.length > 0) {
+              <th class="px-4 text-center uppercase tracking-wider">Action</th>
+              }
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y text-[12px] divide-[#F5F5F5]">
+            @for (row of obs | async; track row) {
+            <tr class="hover:bg-green-50">
+              <td class="py-3 px-6">
+                <div class="flex p-2 justify-center">
+                  {{ (obs | async).indexOf(row) + 1 }}
+                </div>
+              </td>
+              @for (h of columnList; track h.header) {
+              <td class="py-3 px-2 w-auto break-words">
+                @if (h.type === 'currency') {
+                <div
+                  appAddCommasTable
+                  class="inline-flex py-1 px-4 items-center justify-center"
+                >
+                  {{ row[h.columnDef] }}
+                </div>
+                }@else if (h?.type ==='status') {
+                <div
+                  [ngClass]="handleStatus(row[h.columnDef])"
+                  class="inline-flex py-1 px-4"
+                >
+                  {{ row[h.columnDef] }}
+                </div>
+                } @else {
+                <div
+                  [ngClass]="
+                    h?.type === 'status' ? handleStatus(row[h.columnDef]) : ''
+                  "
+                  class="inline-flex py-1 px-4 justify-center"
+                >
+                  {{
+                    h?.type === "date"
+                      ? (row[h.columnDef] | date)
+                      : row[h.columnDef]
+                  }}
+                </div>
+                }
+              </td>
+              } @if(getFilteredActionMenu(row).length > 0) {
+              <td class="px-4 space-x-1 text-center whitespace-nowrap">
+                <i
+                  class="material-icons text-[30px] cursor-pointer"
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                  aria-label="Example icon-button with a menu"
+                  >keyboard_control</i
+                >
+                <mat-menu #menu="matMenu">
+                  @for (item of getFilteredActionMenu(row); track $index) {
+                  <button (click)="selectedMenu(item, row)" mat-menu-item>
+                    <!-- <mat-icon [class]="item.class">{{ item.icon }}</mat-icon> -->
+                    <div class="flex space-x-1 items-center">
+                      <i [ngClass]="item.class" class="material-icons">{{
+                        item.icon
+                      }}</i>
+                      <span [class]="item.class">{{ item.name }}</span>
+                    </div>
+                  </button>
+                  }
+                </mat-menu>
+              </td>
+              }
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="">
+        <div class="flex justify-center">
+          @if(filtering && this.dataSource.filter &&
+          dataSource?.filteredData?.length < 1){
+          <span class="py-3 text-center text-red-500 px-4">
+            No record matches this search value.
+          </span>
+          } @if(!($loading|async) && (obs|async).length < 1 &&
+          !this.dataSource.filter){
+          <span class="py-3 text-center text-red-500 px-4">
+            There is no record found.
+          </span>
+          }
+        </div>
+        <mat-paginator
+          class="table-controller pt-4"
+          #paginator
+          [length]="length"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizeOptions"
+          [hidePageSize]="false"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+// .bg-one {
+//   background-image: url('../../assets/images/background.jpg');
+//   background-repeat: no-repeat;
+//   background-size: cover;
+// }
+
+.darken {
+  filter: brightness(50%);
+}

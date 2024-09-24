@@ -1,0 +1,166 @@
+<div class="min-h-screen flex flex-col  justify-center items-center py-10 bg-white">
+  <div class="flex justify-end sm:w-full md:w-3/4">
+    @if(selectedValue){
+      <div (click)="toggleForm()" class="bg-red-800 rounded-md text-white text-xl flex items-center px-2 py-1 cursor-pointer">
+        <i class="material-icons" >edit</i>
+        <a class>Edit</a>
+      </div>
+    }
+     
+   </div>
+  <div class="md:px-4 py-6 sm:w-5/6 md:w-3/4 rounded-lg bg-gray-200 flex flex-col justify-center items-center">
+    
+    <form [formGroup]="myForm"  class="w-full sm:px-2" >
+      <div class="w-full text-center">
+        <h2>Personal Info</h2>
+        <p>Please Enter Your details correctly</p>
+      </div>
+      <div class="w-full gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+        <div class="flex flex-col gap-1 w-full">
+          <label class="font-semibold" for="">First Name</label>
+          <input formControlName="firstName" class="px-4 py-4" type="text" placeholder="First Name">
+          @if ((f['firstName'].touched || f['firstName'].dirty) && f['firstName'].errors?.['required']) {
+              <span class="text-red-500">This field is required.
+              </span>
+          } 
+        </div>
+        <div class="flex flex-col gap-1 w-full">
+          <label class="font-semibold" for="">Middle Name</label>
+          <input formControlName="middleName" class="px-4 py-4" type="text" placeholder="Middle Name">
+          @if ((f['middleName'].touched || f['middleName'].dirty) && f['middleName'].errors?.['required']) {
+            <span class="text-red-500">This field is required.
+            </span>
+          } 
+        </div>
+        <div class="flex flex-col gap-1 w-full">
+          <label class="font-semibold" for="">Last Name</label>
+          <input formControlName="lastName" class="px-4 py-4" type="text" placeholder="Last Name">
+        </div>
+     
+        <div class="flex flex-col gap-1 w-full">
+          <label class="font-semibold">DOB</label>
+          <input formControlName="dateOfBirth" class="px-4 py-4" type="date">
+          @if (f['dateOfBirth'] && (f['dateOfBirth'].touched || f['dateOfBirth'].dirty) && f['dateOfBirth'].errors?.['required']) {
+            <span class="text-red-500">This field is required.
+            </span>
+        } 
+        </div>
+        <div class="flex flex-col gap-1 w-full">
+          <label class="font-semibold">Gender</label>
+          <select [ngClass]="{'bg-gray-200': !enableForm}" formControlName="gender" class="py-4 px-4">
+            <option value="" disabled>Gender</option>
+            @for(options of gender; track $index) {
+              <option [value]="options.value">{{options.name}}</option>
+            }
+          </select>
+          @if ((f['gender'].touched || f['gender'].dirty) && f['gender'].errors?.['required']) {
+            <span class="text-red-500">This field is required.
+            </span>
+        } 
+        </div>
+        <div class="flex flex-col gap-1 w-full">
+          <label class="font-semibold">Marital Status</label>
+          <select [ngClass]="{'bg-gray-200': !enableForm}" formControlName="maritalStatus" class="py-4 px-4">
+            <option value="" disabled>Marital Status</option>
+            @for(status of maritalStatus; track $index) {
+              <option [value]="status.value">{{status.name}}</option>
+            }
+          </select>
+          @if ((f['maritalStatus'].touched || f['maritalStatus'].dirty) && f['maritalStatus'].errors?.['required']) {
+            <span class="text-red-500">This field is required.
+            </span>
+        } 
+        </div>
+        <div class="flex flex-col gap-1 w-full">
+          <label class="font-semibold">NIN</label>
+          <input formControlName="NIN" class="px-4 py-4" type="number" placeholder="0123456789">
+          @if ((f['NIN'].touched || f['NIN'].dirty) && f['NIN'].errors?.['required']) {
+            <span class="text-red-500">This field is required
+            </span>
+          } 
+        </div>
+        <div class="flex flex-col gap-1 w-full">
+          <label class="font-semibold">Blood Type</label>
+          <select [ngClass]="{'bg-gray-200': !enableForm}" formControlName="bloodType" class="py-4 px-4">
+            <option value="" disabled>Blood Type</option>
+            @for(blood of bloodType; track $index) {
+              <option [value]="blood.value">{{blood.name}}</option>
+            }
+          </select>
+          @if ((f['bloodType'].touched || f['bloodType'].dirty) && f['bloodType'].errors?.['required']) {
+            <span class="text-red-500">This field is required.
+            </span>
+          } 
+        </div>
+        <div class="flex flex-col gap-1 w-full">
+          <label class="font-semibold">Email(optional)</label>
+          <input formControlName="email" class="px-4 py-4" type="email" placeholder="Email">
+          @if ((f['email'].touched || f['email'].dirty) && f['email'].errors?.['email']) {
+            <span class="text-red-500">Please enter a valid email address.</span>
+          }
+        </div>
+          <div class="flex flex-col gap-1 w-full">
+            <label class="font-semibold" for="">Address</label>
+            <input formControlName="streetName" class="px-4 py-4 w-full" type="text" placeholder="Street Name e.g Peace Street">
+            @if ((f['streetName'].touched || f['streetName'].dirty) && f['streetName'].errors?.['required']) {
+              <span class="text-red-500">This field is required</span>
+            }
+          </div>
+          <div class="flex flex-col gap-1 w-full">
+            <label class="font-semibold">State</label>
+            <select [ngClass]="{'bg-gray-200': !enableForm}" formControlName="state" class="py-4 px-4">
+              <option class="" value="" disabled></option>
+              @for (item of state; track $index) {
+                <option [value]="item">{{item}}</option>
+              }
+            </select>
+            @if ((f['state'].touched || f['state'].dirty) && f['state'].errors?.['required']) {
+              <span class="text-red-500">This field is required</span>
+            }
+          </div>
+          <div class="flex flex-col gap-1 w-full">
+            <label class="font-semibold">LGA</label>
+            <select [ngClass]="{'bg-gray-200': !enableForm}" formControlName="lga" class="py-4 px-4">
+              <option class="" value="" disabled></option>
+              @for (item of lga; track $index) {
+                <option [value]="item">{{item}}</option>
+              }
+            </select>
+            @if ((f['lga'].touched || f['lga'].dirty) && f['lga'].errors?.['required']) {
+              <span class="text-red-500">This field is required</span>
+            }
+          </div>
+          <div class="flex flex-col gap-1 w-full">
+            <label class="font-semibold">City/Town</label>
+            <input formControlName="city" class="px-4 py-4  w-full" type="text" placeholder="City">
+            @if ((f['city'].touched || f['city'].dirty) && f['city'].errors?.['required']) {
+              <span class="text-red-500">This field is required</span>
+            }
+          </div>
+        <div class="flex flex-col gap-1 w-full">
+          <label class="font-semibold" for="">Ethnicity</label>
+          <input formControlName="ethnicity" class="px-4 py-4" type="text" placeholder="Yoruba, Hausa, Igbo...">
+          @if ((f['ethnicity'].touched || f['ethnicity'].dirty) && f['ethnicity'].errors?.['required']) {
+            <span class="text-red-500">This field is required</span>
+          }
+        </div>
+        <div class="flex flex-col gap-1 w-full">
+          <label class="font-semibold" for="">Religion</label>
+          <select [ngClass]="{'bg-gray-200': !enableForm}" formControlName="religion" class="py-4 px-4"> 
+            <option value="" disabled>Select your religion</option>
+            @for (item of religion; track $index) {
+              <option [value]="item.value">{{item.name}}</option>
+            }
+          </select>
+          @if ((f['religion'].touched || f['religion'].dirty) && f['religion'].errors?.['required']) {
+            <span class="text-red-500">This field is required</span>
+          }
+        </div>
+      </div>        
+    </form>
+    <div class="text-center my-8">
+      <button (click)="onSubmit()" class="px-4 py-4 rounded-lg bg-blue-800 font-bold cursor-pointer text-white" Type="submit">Submit</button>
+    </div>
+  </div>
+</div>
+

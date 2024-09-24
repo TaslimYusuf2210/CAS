@@ -1,0 +1,15 @@
+.search-wrapper {
+  @apply shadow flex gap-1 pl-2 border border-[#E8E8E8] bg-[#FAFAFA] rounded-md items-center;
+}
+
+.search-input {
+  @apply appearance-none w-full md:flex-[0.9] p-2 bg-[#FAFAFA] flex text-[#000000] rounded-md leading-tight focus:outline-none;
+}
+
+.table-action {
+  @apply flex justify-center bg-gray-300 text-green-900 items-center gap-1;
+}
+
+.menu-link {
+  @apply flex items-center gap-4 text-[#E1E1E1] px-2 text-[16px] font-[400] py-2 rounded;
+}

@@ -1,0 +1,12 @@
+<div class="px-4 py-6 rounded-lg min-h-[40rem] bg-gray-100">
+  <div>
+    <app-generic-table
+    [dataList]="dataList"
+    [columnList]="columnList"
+    [actionMenu]="actionMenu"
+    (onSelectdropdownMenu)="selectedActionButton($event)">  
+    
+    </app-generic-table>
+    
+  </div>
+</div>

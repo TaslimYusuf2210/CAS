@@ -1,0 +1,43 @@
+<div
+  [ngClass]="{
+    'bg-green-100 border-green-100 text-green-700': data.type === 'success',
+    'bg-yellow-100 border-yellow-100 text-yellow-700': data.type === 'warning',
+    'bg-red-100 border-red-100 text-red-700': data.type === 'error',
+    'bg-blue-100 border-blue-100 text-blue-700': data.type === 'info'
+  }"
+  class="border px-4 py-3 flex flex-col justify-center items-center rounded relative"
+  role="alert"
+>
+  <div class="flex text-center flex-col mb-4 space-y-2">
+    @if (data.type=== 'success') {
+    <i class="material-icons">check_circle</i>
+    <strong class="">{{ data.header || "SUCCESS" }}</strong>
+    } @if (data.type=== 'info') {
+    <i class="material-icons">info</i>
+    <strong class="">{{ data.header || "INFO" }}</strong>
+    } @if(data.type=== 'error') {
+    <i class="material-icons">error</i>
+    <strong class="">{{ data.header || "ERROR" }}</strong>
+    } @if(data.type=== 'warning') {
+    <i class="material-icons">warning</i>
+    <strong class="">{{ data.header || "WARNING" }}</strong>
+    }
+
+    <span class="block md:inline text-[14px]">{{ data.message }}</span>
+  </div>
+  <div class="flex justify-end">
+    <button
+      mat-button
+      [ngClass]="{
+        'bg-green-700': data.type === 'success',
+        'bg-yellow-700 text-yellow-100': data.type === 'warning',
+        'bg-red-700 text-red-100': data.type === 'error',
+        'bg-blue-700 text-blue-100': data.type === 'info'
+      }"
+      class="cursor-pointer bg-blue-700 w-[30px] text-white"
+      (click)="close()"
+    >
+      Ok
+    </button>
+  </div>
+</div>

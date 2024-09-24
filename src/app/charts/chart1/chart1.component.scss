@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#chartdiv {
+  @apply w-full h-96
+}

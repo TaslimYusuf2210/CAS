@@ -1,0 +1,70 @@
+<header class="bg-gray-100 shadow sticky top-0 w-full z-50 mb-3">
+  <div class="md:mx-auto px-4 py-1 flex justify-between items-center">
+    <div class="flex items-center w-[200px] space-x-2">
+      <span
+      [routerLink]="['dashboard']"
+      class="md:h-[70px] w-[180px] !md:w-[400px] h-[50px] cursor-pointer font-explora text-2xl"
+      >
+        cas
+      </span>
+    </div>
+
+    <nav class="hidden md:flex !text-md md:space-x-6 space-x-1 items-center text-gray-800">
+      <a [routerLink]="['dashboard']" class="hover:text-black hover:text-lg font-medium text-base" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
+      <a         [routerLink]="['records']"
+      class="hover:text-black hover:text-lg font-medium text-base" routerLinkActive="active">Records</a>
+      <a         [routerLink]="['user-details']"
+      class="hover:text-black hover:text-lg font-medium text-base" routerLinkActive="active">Register</a>
+    </nav>
+    <div class="hidden md:flex space-x-4 items-center">
+    </div>
+
+    <button class="md:hidden focus:outline-none" (click)="toggleMenu()">
+      @if (isMenuOpen) {
+      <i class="material-icons">close</i>
+      } @else {
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16m-7 6h7"
+        />
+      </svg>
+      }
+    </button>
+  </div>
+
+  @if (    isMenuOpen
+  ) {
+    <div
+    class="md:hidden bg-[#12bcf0] text-white space-y-4 px-4 py-2"
+  >
+  <a [routerLink]="['Dashboard']" class="hover:text-gray-200">Dashboard</a>
+  <a         [routerLink]="['records']"
+  class="hover:text-gray-200">Records</a>
+  <a         [routerLink]="['user-details']"
+  class="hover:text-gray-200">Register</a>
+    <div class="flex space-x-2">
+      <button
+        
+      > click</button>
+      <button>click</button>
+      <a
+        class="border cursor-pointer px-4 py-2 rounded-md"
+      >
+        Be an Agent
+      </a>
+    </div>
+  </div>
+  }
+  
+</header>
+<router-outlet class="mt-4"></router-outlet>
+
