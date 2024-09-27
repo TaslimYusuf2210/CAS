@@ -17,8 +17,8 @@ export class LandingpageComponent {
   }
   openLogin() {
     this.dialog.open(LoginComponent, {
-      width: '250px',
-      height: '250px',
+      width: '60vw',
+      height: '60vh',
     })
   }
 }

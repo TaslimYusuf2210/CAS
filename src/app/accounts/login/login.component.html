@@ -1,12 +1,26 @@
 <div class="flex justify-center items-center bg-slate-300 h-screen w-full">
-  <form class="p-6 w-full flex flex-col space-y-3" action="">
+  <form [formGroup]="loginForm" class="p-6 w-full flex flex-col space-y-3" action="">
     <div class="flex flex-col w-full">
-      <label for="email">Email</label>
-      <input class="w-full" type="email">
+      <label class="font-medium">Email</label>
+      <input formControlName="email" class="w-full p-2 rounded focus:outline-black" placeholder="Email" type="email">
+      @if ((c['email'].touched || c['email'].dirty) && c['email'].errors?.['required']) {
+        <span class="text-red-500 text-xs">This field is required.
+        </span>
+      } 
+      @if ((c['email'].touched || c['email'].dirty) && c['email'].errors?.['email']) {
+        <span class="text-red-500 text-xs">Please enter a valid email address.</span>
+      }
     </div>
     <div class="flex flex-col w-full">
-      <label for="email">email</label>
-      <input class="w-full" type="email">
+      <label class="font-medium">Password</label>
+      <input formControlName="password" class="w-full p-2 rounded focus:outline-black" placeholder="password" type="password">
+      @if ((c['password'].touched || c['password'].dirty) && c['password'].errors?.['required']) {
+        <span class="text-red-500 text-xs">This field is required.
+        </span>
+      } 
+    </div>
+    <div class="w-full text-center">
+      <button class="w-1/3 bg-blue-700 py-2 rounded text-white hover:bg-blue-800 hover:font-semibold hover:tracking-widest">Login</button>
     </div>
   </form>
 </div>
