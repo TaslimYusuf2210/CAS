@@ -21,7 +21,7 @@ export class GlobalService {
   }
 
   saveData(key:string, value:string){
-    localStorage.setItem(key, JSON.stringify(value))
+    localStorage.setItem(key, JSON.stringify(value)), FormData
   }
 
   getData(key:string){
