@@ -20,7 +20,8 @@
       } 
     </div>
     <div class="w-full text-center">
-      <button class="w-1/3 bg-blue-700 py-2 rounded text-white hover:bg-blue-800 hover:font-semibold hover:tracking-widest">Login</button>
+      <button (click)="onLogin()" class="w-1/3 bg-blue-700 py-2 rounded text-white hover:bg-blue-800 hover:font-semibold hover:tracking-widest">Login</button>
     </div>
+    <div *ngIf="formValuesPresent == true" class="text-red-500 font-medium"> Please input your values</div>
   </form>
 </div>

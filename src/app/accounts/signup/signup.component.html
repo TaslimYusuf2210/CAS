@@ -47,6 +47,7 @@
     <div class="w-full text-center">
       <button (click)="onSubmit()" class="bg-green-500 text-white py-4 font-semibold rounded w-1/4" type="submit">Sign Up</button>
       <p class="text-blue-500">I'm already a member! <strong>Login</strong></p>
+      <div *ngIf="confirmUser == true" class="text-red-500 font-medium"><p>Sorry, we couldn't confirm your password</p></div>
     </div>
   </form>
 </div>
