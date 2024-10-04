@@ -33,6 +33,10 @@ export class DashboardComponent implements OnInit {
 
   constructor(public globalService: GlobalService){}
 
+  fetchStateData(){
+    let data = this.globalService.getData("formEntries")
+
+  }
 
   fetchGenderData (){
     let data = this.globalService.getData("formEntries")
@@ -44,18 +48,22 @@ export class DashboardComponent implements OnInit {
     console.log(this.genderData)
   }
 
-  fetchMarriageStatusData(){
-    let data = this.globalService.getData("formEntries")
-    let married = data.filter((a:any)=> a.maritalStatus.toLowerCase() === "married")
-    let single = data.filter((a:any)=> a.maritalStatus.toLowerCase() === "single")
-    let divorced = data.filter((a:any)=> a.maritalStatus.toLowerCase() === "divorced")
-    let widowed = data.filter((a:any)=> a.maritalStatus.toLowerCase() === "widowed")
-    this.maritalStatusData.push({value: married.length, category: "married"})
-    this.maritalStatusData.push({value: single.length, category: "single"})
-    this.maritalStatusData.push({value: divorced.length, category: "divorced"})
-    this.maritalStatusData.push({value: widowed.length, category: "widowed"})
-    console.log(this.maritalStatusData)
-  }
+ fetchMarriageStatusData() {
+  let data = this.globalService.getData("formEntries") || [];
+  let married = data.filter((a: any) => a.maritalStatus.toLowerCase() === "married");
+  let single = data.filter((a: any) => a.maritalStatus.toLowerCase() === "single");
+  let divorced = data.filter((a: any) => a.maritalStatus.toLowerCase() === "divorced");
+  let widowed = data.filter((a: any) => a.maritalStatus.toLowerCase() === "widowed");
+
+  this.maritalStatusData = [
+    { value: married.length, category: "married" },
+    { value: single.length, category: "single" },
+    { value: divorced.length, category: "divorced" },
+    { value: widowed.length, category: "widowed" }
+  ];
+
+  console.log(this.maritalStatusData);  // Ensure data is correct
+}
 
   public pieChartDatas = [
     { category: "Category A", value: 40 },
