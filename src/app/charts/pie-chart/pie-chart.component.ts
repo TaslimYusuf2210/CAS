@@ -29,7 +29,7 @@ export class PieChartComponent implements OnInit, OnDestroy {
     // Create a container to hold both the chart and the legend
     let mainContainer = this.root.container.children.push(
       am5.Container.new(this.root, {
-        layout: this.root.horizontalLayout,  // Layout for side-by-side chart and legend
+        layout: this.root.verticalLayout,  // Layout for side-by-side chart and legend
         width: am5.percent(100),
         height: am5.percent(100),
       })
@@ -38,7 +38,7 @@ export class PieChartComponent implements OnInit, OnDestroy {
     // Chart container (left side, 70% width)
     let chartContainer = mainContainer.children.push(
       am5.Container.new(this.root, {
-        width: am5.percent(70),  // Set the chart container width
+        width: am5.percent(100),  // Set the chart container width
         height: am5.percent(100),
       })
     );
@@ -46,7 +46,7 @@ export class PieChartComponent implements OnInit, OnDestroy {
     // Create the Pie Chart
     let chart = chartContainer.children.push(
       am5percent.PieChart.new(this.root, {
-        layout: this.root.verticalLayout,
+        layout: this.root.horizontalLayout,
       })
     );
 
@@ -73,23 +73,63 @@ export class PieChartComponent implements OnInit, OnDestroy {
     // Legend container (right side, 30% width)
     let legendContainer = mainContainer.children.push(
       am5.Container.new(this.root, {
-        width: am5.percent(30),  // Set the legend container width
+        width: am5.percent(70),  // Set the legend container width
         height: am5.percent(100),
+        layout: this.root.gridLayout,
+
       })
     );
 
     // Create the legend
     let legend = legendContainer.children.push(
       am5.Legend.new(this.root, {
-        layout: this.root.verticalLayout,  // Arrange the legend items vertically
-        centerY: am5.percent(50),  // Center vertically within the container
+        layout: this.root.gridLayout,    // Set layout to grid
+        centerY: am5.percent(0),  // Center vertically within the container
+        centerX: am5.percent(50),
+        x: am5.percent(70),
+        marginLeft: 20
       })
     );
 
     // Link the legend with the data
     legend.data.setAll(series.dataItems);
 
-    // Animate the chart
+    legend.labels.template.setAll({
+      fontSize: "15px",          // Set the font size
+      fontFamily: "sans-serif",  // Set the font family
+      fill: am5.color(0x4e4e4e), // Set the font color (hex or AMCharts color)
+      fontWeight: "bold",        // Set the font weight (normal, bold, etc.)
+    });
+
+    function adjustLegendStyle() {
+      if (window.innerWidth < 600) {
+        legend.labels.template.setAll({
+          fontSize: 10,
+        });
+      } else {
+        legend.labels.template.setAll({
+          fontSize: 16,
+        });
+      }
+    }
+    
+    window.addEventListener("resize", adjustLegendStyle);
+    adjustLegendStyle();
+
+    // function adjustLayout() {
+    //   if (window.innerWidth < 600) {
+    //     chart.set("layout", root.verticalLayout); // Stack the chart and legend
+    //   } else {
+    //     chart.set("layout", root.horizontalLayout); // Keep them side by side
+    //   }
+    // }
+    
+    // // Call function initially
+    // adjustLayout();
+    
+    // // Adjust layout when window resizes
+    // window.addEventListener("resize", adjustLayout);
+
     series.appear(1000, 100);
   }
 

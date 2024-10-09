@@ -1,7 +1,7 @@
 <div class="flex">
   <div class="w-full px-10">
     <div class="flex flex-col gap-4">
-      <div class="flex justify-between gap-4 min-h-32 text-white">
+      <div class="grid grid-cols-1 gap-4 min-h-32 text-white md:grid-cols-2 lg:grid-cols-4">
         <div class="py-6 px-4 bg-blue-400 w-full rounded-xl text-center">
           <h2 class="text-lg">Total Population</h2>
           <p class="text-4xl font-medium">233,783,818</p>
@@ -19,19 +19,19 @@
           <p class="text-4xl font-medium">43.37%</p>
         </div>
       </div>
-      <div class="flex gap-4 min-h-[25rem]">
-        <div class="w-1/3 px-4 py-6 bg-gray-100 rounded-xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 min-h-[25rem]">
+        <div class=" px-4 py-6 bg-gray-100 rounded-xl">
           <app-chart1></app-chart1>
         </div>
-        <div class="w-2/3 px-4 py-6 bg-gray-100 rounded-xl">  
+        <div class=" px-4 py-6 bg-gray-100 rounded-xl">  
           <app-chart2></app-chart2>
         </div>
       </div>
-      <div class="flex gap-4 min-h-[20rem]">
-        <div *ngIf="chartData.length > 0" class="w-3/5 px-4 py-6 bg-gray-100 rounded-xl">
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <div *ngIf="chartData.length > 0" class="px-4 py-6 bg-gray-100 rounded-xl">
           <app-pie-chart [data]="maritalStatusData"></app-pie-chart>
         </div>
-        <div *ngIf="pieChartDatas.length > 0" class="w-2/3 px-4 py-6 bg-gray-100 rounded-xl">
+        <div *ngIf="pieChartDatas.length > 0" class=" px-4 py-6 bg-gray-100 rounded-xl">
           <app-donut-chart [data]="genderData"></app-donut-chart>    
         </div>
       </div>
