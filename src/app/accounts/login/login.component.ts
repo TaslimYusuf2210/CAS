@@ -3,11 +3,13 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { GlobalService } from '../../global.service';
 import { ILogin } from './loginModel';
 import { CommonModule } from '@angular/common';
+import { RouterModule, Route, Router } from '@angular/router';
+import { AuthService } from '../../auth.service'
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -22,7 +24,7 @@ export class LoginComponent implements OnInit {
 
 
   
-  constructor(private fb: FormBuilder, public globalService: GlobalService){}
+  constructor(private fb: FormBuilder, public globalService: GlobalService, private router: Router, private authService: AuthService){}
   
   ngOnInit(): void {
     
@@ -39,14 +41,23 @@ export class LoginComponent implements OnInit {
     let typedEmail = this.loginForm.get('email')?.value;
     let typedPassword = this.loginForm.get('password')?.value;
 
-    // const formData = this.loginForm.value as ILogin;
-    let users = this.globalService.getData("signupDetails")
-    let emailExist = users.find((item:any) => item.email === typedEmail)
-    console.log(emailExist)
-    if (emailExist && emailExist.password.toLowerCase() === typedPassword.toLowerCase()) {
-      alert("login successful")
+    if (this.authService.loginUser(typedEmail, typedPassword)) {
+      alert('Login successful');
+      this.router.navigate(['/cas/dashboard'])
     } else {
-      alert("Incorrect Password or Email")
+      alert('Incorrect Password or Email')
     }
+
+    // const formData = this.loginForm.value as ILogin;
+    // let users = this.globalService.getData("signupDetails")
+    // let emailExist = users.find((item:any) => item.email === typedEmail)
+    // console.log(emailExist)
+    // if (emailExist && emailExist.password.toLowerCase() === typedPassword.toLowerCase()) {
+    //   alert("login successful")
+    //   localStorage.setItem('loggedInUser', JSON.stringify(emailExist))
+    //   this.router.navigate(['/dashboard'])
+    // } else {
+    //   alert("Incorrect Password or Email")
+    // }
   }
 }

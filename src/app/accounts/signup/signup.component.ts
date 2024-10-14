@@ -8,11 +8,15 @@ import {
 import { GlobalService } from '../../global.service';
 import { SignupI } from './signupModel';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule, } from '@angular/router';
+import { LoginComponent } from '../login/login.component';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog'
+
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
@@ -27,10 +31,17 @@ export class SignupComponent {
 
   public confirmUser:boolean = false;
 
-  constructor(private fb: FormBuilder, public globalService: GlobalService) {}
+  constructor(private fb: FormBuilder, public globalService: GlobalService, private router: Router, private dialog: MatDialog) {}
 
   get f() {
     return this.signupForm.controls;
+  }
+
+  openLogin() {
+    this.dialog.open(LoginComponent, {
+      width: '450px',
+      height: '450px'
+    })
   }
 
   onSubmit() {
@@ -76,14 +87,20 @@ export class SignupComponent {
           // Store the updated array back to localStorage as a string
           localStorage.setItem('signupDetails', JSON.stringify(updatedData));
           alert('registration successful')
+          this.dialog.open(LoginComponent, {
+            width: '450px',
+            height: '450px'
+          })
+          // this.router.navigate(['/login'])
         } else {
           alert('Users exist')
+          
         }
 
       }
     } else {
       this.confirmUser = true;
-      console.log("We couldn't confirm your password")
+      alert("We couldn't confirm your password")
     }
   }
 }
