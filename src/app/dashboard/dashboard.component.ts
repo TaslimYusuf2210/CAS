@@ -7,6 +7,7 @@ import { PieChartComponent } from '../charts/pie-chart/pie-chart.component';
 import { DonutChartComponent } from '../charts/donut-chart/donut-chart.component';
 import { CommonModule } from '@angular/common';
 import { GlobalService } from '../global.service';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,6 +23,8 @@ export class DashboardComponent implements OnInit {
   public genderData:any = []
 
   public maritalStatusData:any = []
+
+  public stateData:any = []
   // public genderData = []
   // public genderData = []
   
@@ -29,6 +32,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.fetchGenderData()
     this.fetchMarriageStatusData()
+    this.fetchStateGraphData()
   }
 
   constructor(public globalService: GlobalService){}
@@ -63,6 +67,58 @@ export class DashboardComponent implements OnInit {
   ];
 
   console.log(this.maritalStatusData);  // Ensure data is correct
+}
+
+fetchStateGraphData() {
+  let data = this.globalService.getData("formEntries") || [];
+
+    const countStates = data.reduce((acc:any, item:any) => {
+      if (acc[item.state]) {
+        acc[item.state] += 1; // Increment the count if it does
+      } else {
+        acc[item.state] = 1; // Initialize the count if it doesn't
+      }
+      return acc;
+    }, {});
+    
+    const result = Object.keys(countStates).map(state => ({ [state]: countStates[state] }));
+    console.log(Object)
+    console.log(Object.keys(countStates))
+    console.log(Object.values(countStates))
+    console.log(result)
+
+    // this.stateData = [
+    //   {value: }
+    // ]
+
+    
+}
+
+fetchStateGraphData2() {
+  let data = this.globalService.getData("formEntries") || [];
+  console.log(data)
+  let test:any[] = []
+  data.filter((item:any)=> {
+    console.log(item)
+    if(test.length > 0){
+    test.filter((i:any, index)=> {
+      if (item.state === i.state) {
+        console.log(i)
+        test[index].value = test[index]?.value + 1 
+      }
+      else {
+        test.push({
+          state: item.state,
+          value: 1
+        })
+        console.log(test)
+      }
+      console.log(test)
+    })}else {
+      test.push({state: item.state, value:1})
+    }
+
+  })
 }
 
   public pieChartDatas = [

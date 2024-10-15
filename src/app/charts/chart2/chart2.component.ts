@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, Input } from '@angular/core';
 import * as am5 from "@amcharts/amcharts5";
 import * as am5xy from "@amcharts/amcharts5/xy";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
@@ -11,8 +11,10 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
   styleUrl: './chart2.component.scss'
 })
 export class Chart2Component implements AfterViewInit, OnDestroy {
-  
   private root!: am5.Root;
+  @Input() data: any[] = [];  // Data input
+
+
   ngAfterViewInit() {
     this.createChart();
   }

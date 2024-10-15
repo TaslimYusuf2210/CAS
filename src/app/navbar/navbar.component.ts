@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog'
 import { LoginComponent } from '../accounts/login/login.component';
+import { SignupComponent } from '../accounts/signup/signup.component';
 
 
 @Component({
@@ -19,6 +20,12 @@ export class NavbarComponent {
     this.dialog.open(LoginComponent, {
       width: '450px',
       height: '450px'
+    })
+  }
+  openSignUp(){
+    this.dialog.open(SignupComponent, {
+      width:'550px',
+      height:'650px'
     })
   }
 }

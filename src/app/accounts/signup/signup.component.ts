@@ -10,13 +10,13 @@ import { SignupI } from './signupModel';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule, } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog'
+import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dialog'
 
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule, MatDialogModule],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
@@ -31,7 +31,7 @@ export class SignupComponent {
 
   public confirmUser:boolean = false;
 
-  constructor(private fb: FormBuilder, public globalService: GlobalService, private router: Router, private dialog: MatDialog) {}
+  constructor(private fb: FormBuilder, public globalService: GlobalService, private router: Router, private dialog: MatDialog, private dialogRef: MatDialogRef<SignupComponent>) {}
 
   get f() {
     return this.signupForm.controls;
@@ -87,10 +87,8 @@ export class SignupComponent {
           // Store the updated array back to localStorage as a string
           localStorage.setItem('signupDetails', JSON.stringify(updatedData));
           alert('registration successful')
-          this.dialog.open(LoginComponent, {
-            width: '450px',
-            height: '450px'
-          })
+          this.openLogin()
+          this.dialogRef.close()
           // this.router.navigate(['/login'])
         } else {
           alert('Users exist')

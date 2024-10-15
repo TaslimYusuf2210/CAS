@@ -42,7 +42,7 @@ export class RecordsComponent implements AfterViewInit {
   public columnList: Column[] = [
     { header: 'firstName', columnDef: 'firstName' },
     { header: 'lastName', columnDef: 'lastName' },
-    { header: 'maritalStatus', columnDef: 'maritalStatus', type: 'status' },
+    { header: 'state', columnDef: 'state' },
     { header: 'gender', columnDef: 'gender', type: 'status'},
   ];
 

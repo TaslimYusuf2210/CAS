@@ -25,8 +25,13 @@ export class AuthService {
   }
 
   // Check if the user is logged in
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('loggedInUser');
+  get isLoggedIn():boolean {
+    let user = localStorage.getItem('loggedInUser');
+
+    if (user) {
+      return true
+    } 
+      return false
   }
 
   // Log out the user

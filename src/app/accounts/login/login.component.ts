@@ -5,11 +5,12 @@ import { ILogin } from './loginModel';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Route, Router } from '@angular/router';
 import { AuthService } from '../../auth.service'
+import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dialog'
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule, MatDialogModule,],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit {
 
 
   
-  constructor(private fb: FormBuilder, public globalService: GlobalService, private router: Router, private authService: AuthService){}
+  constructor(private fb: FormBuilder, public globalService: GlobalService, private router: Router, private authService: AuthService, private dialog: MatDialog, private dialogRef: MatDialogRef<LoginComponent>){}
   
   ngOnInit(): void {
     
@@ -43,6 +44,7 @@ export class LoginComponent implements OnInit {
 
     if (this.authService.loginUser(typedEmail, typedPassword)) {
       alert('Login successful');
+      this.dialogRef.close()
       this.router.navigate(['/cas/dashboard'])
     } else {
       alert('Incorrect Password or Email')
