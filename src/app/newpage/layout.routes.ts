@@ -14,7 +14,7 @@ export const layoutRoutes: Routes = [
 
       { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard], },
       { path: 'records', component: RecordsComponent, canActivate: [authGuard], },
-      { path: 'newpage', component: NewpageComponent, canActivate: [authGuard], },
+      // { path: 'newpage', component: NewpageComponent, canActivate: [authGuard], },
       { path: 'records/:id', component: DetailFormComponent, canActivate: [authGuard], },
       { path: 'user-details', component: DetailFormComponent, canActivate: [authGuard], },
       { path: '**', redirectTo: 'dashboard' },

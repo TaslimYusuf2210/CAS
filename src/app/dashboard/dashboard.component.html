@@ -20,16 +20,16 @@
         </div>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 min-h-[25rem]">
-        <div class=" px-4 py-6 bg-gray-100 rounded-xl">
+        <div  class=" px-4 py-6 bg-gray-100 rounded-xl">
           <app-chart1></app-chart1>
         </div>
-        <div class=" px-4 py-6 bg-gray-100 rounded-xl">  
-          <app-chart2></app-chart2>
+        <div *ngIf="stateChart.length > 0" class=" px-4 py-6 bg-gray-100 rounded-xl">  
+          <app-chart2 [data]="stateData"></app-chart2>
         </div>
       </div>
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div *ngIf="chartData.length > 0" class="px-4 py-6 bg-gray-100 rounded-xl">
-          <!-- <app-pie-chart [data]="maritalStatusData"></app-pie-chart> -->
+          <app-pie-chart [data]="maritalStatusData"></app-pie-chart>
         </div>
         <div *ngIf="pieChartDatas.length > 0" class=" px-4 py-6 bg-gray-100 rounded-xl">
           <app-donut-chart [data]="genderData"></app-donut-chart>    

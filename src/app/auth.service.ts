@@ -37,7 +37,7 @@ export class AuthService {
   // Log out the user
   logout(): void {
     localStorage.removeItem('loggedInUser');
-    this.router.navigate(['/login']); // Redirect to login page after logout
+    this.router.navigate(['']);
   }
 
   // Get users from local storage

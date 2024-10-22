@@ -81,45 +81,21 @@ fetchStateGraphData() {
       return acc;
     }, {});
     
-    const result = Object.keys(countStates).map(state => ({ [state]: countStates[state] }));
+    this.stateData = Object.keys(countStates).map(state => ({ [state]: countStates[state] }));
     console.log(Object)
     console.log(Object.keys(countStates))
     console.log(Object.values(countStates))
-    console.log(result)
+    console.log(this.stateData)
 
-    // this.stateData = [
-    //   {value: }
-    // ]
-
-    
+    this.stateData = [
+      { state: ""}
+    ]
 }
 
-fetchStateGraphData2() {
-  let data = this.globalService.getData("formEntries") || [];
-  console.log(data)
-  let test:any[] = []
-  data.filter((item:any)=> {
-    console.log(item)
-    if(test.length > 0){
-    test.filter((i:any, index)=> {
-      if (item.state === i.state) {
-        console.log(i)
-        test[index].value = test[index]?.value + 1 
-      }
-      else {
-        test.push({
-          state: item.state,
-          value: 1
-        })
-        console.log(test)
-      }
-      console.log(test)
-    })}else {
-      test.push({state: item.state, value:1})
-    }
-
-  })
-}
+public stateChart = [
+  { state: "Abia", value: 5},
+  { state: "Adamawa", value: 2}
+]
 
   public pieChartDatas = [
     { category: "Category A", value: 40 },

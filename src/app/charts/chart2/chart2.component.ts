@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit, Input } from '@angular/cor
 import * as am5 from "@amcharts/amcharts5";
 import * as am5xy from "@amcharts/amcharts5/xy";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
+import { CloseScrollStrategy } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-chart2',
@@ -10,13 +11,18 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
   templateUrl: './chart2.component.html',
   styleUrl: './chart2.component.scss'
 })
-export class Chart2Component implements AfterViewInit, OnDestroy {
+export class Chart2Component implements AfterViewInit, OnDestroy, OnInit {
   private root!: am5.Root;
   @Input() data: any[] = [];  // Data input
 
 
   ngAfterViewInit() {
     this.createChart();
+    console.log(this.data, 'Chart component')
+  }
+
+  ngOnInit(): void {
+    console.log('Hello world!!!')
   }
 
   ngOnDestroy() {
@@ -95,22 +101,22 @@ export class Chart2Component implements AfterViewInit, OnDestroy {
       strokeOpacity: 0,
     });
 
-    let data = [
-      { country: "USA", value: 2025 },
-      { country: "China", value: 1882 },
-      { country: "Japan", value: 1809 },
-      { country: "Germany", value: 1322 },
-      { country: "UK", value: 1122 },
-      { country: "France", value: 1114 },
-      { country: "India", value: 984 },
-      { country: "Spain", value: 711 },
-      { country: "Netherlands", value: 665 },
-      { country: "South Korea", value: 443 },
-      { country: "Canada", value: 441 },
-    ];
+    // let data = [
+    //   { country: "USA", value: 2025 },
+    //   { country: "China", value: 1882 },
+    //   { country: "Japan", value: 1809 },
+    //   { country: "Germany", value: 1322 },
+    //   { country: "UK", value: 1122 },
+    //   { country: "France", value: 1114 },
+    //   { country: "India", value: 984 },
+    //   { country: "Spain", value: 711 },
+    //   { country: "Netherlands", value: 665 },
+    //   { country: "South Korea", value: 443 },
+    //   { country: "Canada", value: 441 },
+    // ];
 
-    xAxis.data.setAll(data);
-    series.data.setAll(data);
+    xAxis.data.setAll(this.data);
+    series.data.setAll(this.data);
 
     series.appear(1000);
     chart.appear(1000, 100);
