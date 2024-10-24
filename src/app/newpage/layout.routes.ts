@@ -4,6 +4,7 @@ import { DetailFormComponent } from '../pages/detail-form/detail-form.component'
 import { NewpageComponent } from '../newpage/newpage.component';
 import { RecordsComponent } from '../pages/records/records.component';
 import { authGuard } from '../auth.guard';
+import { ActionComponent } from '../action/action.component';
 
 export const layoutRoutes: Routes = [
   {
@@ -17,6 +18,7 @@ export const layoutRoutes: Routes = [
       // { path: 'newpage', component: NewpageComponent, canActivate: [authGuard], },
       { path: 'records/:id', component: DetailFormComponent, canActivate: [authGuard], },
       { path: 'user-details', component: DetailFormComponent, canActivate: [authGuard], },
+      { path: 'actions', component: ActionComponent, canActivate: [authGuard], },
       { path: '**', redirectTo: 'dashboard' },
     ],
   },

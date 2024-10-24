@@ -25,6 +25,9 @@ export class DashboardComponent implements OnInit {
   public maritalStatusData:any = []
 
   public stateData:any = []
+
+  public register!: number;
+  public bachelor!: number;
   // public genderData = []
   // public genderData = []
   
@@ -33,23 +36,18 @@ export class DashboardComponent implements OnInit {
     this.fetchGenderData()
     this.fetchMarriageStatusData()
     this.fetchStateGraphData()
+    this.getRegisteredCitizen()
+    this.getBachelors()
   }
 
   constructor(public globalService: GlobalService){}
 
-  fetchStateData(){
-    let data = this.globalService.getData("formEntries")
-
-  }
-
   fetchGenderData (){
     let data = this.globalService.getData("formEntries")
-    console.log(data)
     let male = data.filter((a:any)=> a.gender.toLowerCase()=== "male" )
     let female = data.filter((a:any)=> a.gender.toLowerCase()=== "female" )
     this.genderData.push({value: male.length, category: "male"})
     this.genderData.push({value: female.length, category: "female"})
-    console.log(this.genderData)
   }
 
  fetchMarriageStatusData() {
@@ -66,7 +64,6 @@ export class DashboardComponent implements OnInit {
     { value: widowed.length, category: "widowed" }
   ];
 
-  console.log(this.maritalStatusData);  // Ensure data is correct
 }
 
 fetchStateGraphData() {
@@ -81,20 +78,31 @@ fetchStateGraphData() {
       return acc;
     }, {});
     
-    this.stateData = Object.keys(countStates).map(state => ({ [state]: countStates[state] }));
-    console.log(Object)
-    console.log(Object.keys(countStates))
-    console.log(Object.values(countStates))
-    console.log(this.stateData)
+    this.stateData = Object.keys(countStates).map(state => ({ category: state, value: countStates[state] }));
+}
 
-    this.stateData = [
-      { state: ""}
-    ]
+getRegisteredCitizen(){
+  let data = this.globalService.getData("formEntries")
+  this.register = data.length
+  console.log(this.register)
+  return this.register
+}
+
+getBachelors(){
+  let data = this.globalService.getData("formEntries")
+  console.log(data)
+  let test = data.filter((value:any) => {
+      return value.maritalStatus !== "married" && value.maritalStatus !== "divorced";
+  })
+  let test2 = (test.length/data.length) * 100
+  this.bachelor = test2
+  return this.bachelor
 }
 
 public stateChart = [
-  { state: "Abia", value: 5},
-  { state: "Adamawa", value: 2}
+  { category: "Category A", value: 1},
+  { category: "Category B", value: 2},
+  { category: "Category C", value: 3}
 ]
 
   public pieChartDatas = [

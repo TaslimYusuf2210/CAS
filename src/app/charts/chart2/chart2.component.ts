@@ -11,18 +11,13 @@ import { CloseScrollStrategy } from '@angular/cdk/overlay';
   templateUrl: './chart2.component.html',
   styleUrl: './chart2.component.scss'
 })
-export class Chart2Component implements AfterViewInit, OnDestroy, OnInit {
+export class Chart2Component implements AfterViewInit, OnDestroy {
   private root!: am5.Root;
   @Input() data: any[] = [];  // Data input
 
 
   ngAfterViewInit() {
     this.createChart();
-    console.log(this.data, 'Chart component')
-  }
-
-  ngOnInit(): void {
-    console.log('Hello world!!!')
   }
 
   ngOnDestroy() {
@@ -68,7 +63,7 @@ export class Chart2Component implements AfterViewInit, OnDestroy, OnInit {
     let xAxis = chart.xAxes.push(
       am5xy.CategoryAxis.new(this.root, {
         maxDeviation: 0.3,
-        categoryField: "country",
+        categoryField: "category",
         renderer: xRenderer,
         tooltip: am5.Tooltip.new(this.root, {}),
       })
@@ -76,6 +71,7 @@ export class Chart2Component implements AfterViewInit, OnDestroy, OnInit {
 
     let yAxis = chart.yAxes.push(
       am5xy.ValueAxis.new(this.root, {
+        numberFormat: "#",
         maxDeviation: 0.3,
         renderer: am5xy.AxisRendererY.new(this.root, { strokeOpacity: 0.1 }),
       })
@@ -87,7 +83,7 @@ export class Chart2Component implements AfterViewInit, OnDestroy, OnInit {
         xAxis: xAxis,
         yAxis: yAxis,
         valueYField: "value",
-        categoryXField: "country",
+        categoryXField: "category",
         sequencedInterpolation: true,
         tooltip: am5.Tooltip.new(this.root, {
           labelText: "{valueY}",

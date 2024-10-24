@@ -1,0 +1,10 @@
+<div class="px-4">
+  <header class="w-full justify-center flex gap-4">
+    <button (click)="setActiveTab('fund')" [ngClass]="{'active-tab': activeTab === 'fund'}" class="w-full text-center font-semibold">Fund Disbursement</button>
+    <button (click)="setActiveTab('palliative')" [ngClass]="{'active-tab': activeTab === 'palliative'}" class="w-full text-center font-semibold">Palliative distribution</button>
+  </header>
+  <div>
+    <app-fund-disbursement *ngIf="activeTab === 'fund' "></app-fund-disbursement>
+    <app-palliative-distribution *ngIf="activeTab === 'palliative' "></app-palliative-distribution>
+  </div>
+</div>

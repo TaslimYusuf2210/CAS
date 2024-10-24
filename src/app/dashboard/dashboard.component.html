@@ -12,11 +12,11 @@
         </div>
         <div class="py-6 px-4 bg-green-400 w-full rounded-xl text-center">
           <h2 class="md:text-lg text-base">Registered Citizens</h2>
-          <p class="md:text-4xl font-medium text-3xl">8,783,818</p>
+          <p class="md:text-4xl font-medium text-3xl">{{register}}</p>
         </div>
         <div class="py-6 px-4 bg-purple-400 w-full rounded-xl text-center">
           <h2 class="md:text-lg text-base">Bachelor Percentage</h2>
-          <p class="md:text-4xl font-medium text-3xl">43.37%</p>
+          <p class="md:text-4xl font-medium text-3xl">{{bachelor}}%</p>
         </div>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 min-h-[25rem]">
@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <div *ngIf="chartData.length > 0" class="px-4 py-6 bg-gray-100 rounded-xl">
+        <div *ngIf="chartData.length > 0" class="px-4 py-6 bg-gray-100 rounded-xl pb-6">
           <app-pie-chart [data]="maritalStatusData"></app-pie-chart>
         </div>
         <div *ngIf="pieChartDatas.length > 0" class=" px-4 py-6 bg-gray-100 rounded-xl">

@@ -15,6 +15,8 @@
       class="hover:text-black hover:text-lg font-medium text-base" routerLinkActive="active">Records</a>
       <a         [routerLink]="['user-details']"
       class="hover:text-black hover:text-lg font-medium text-base" routerLinkActive="active">Register</a>
+      <a         [routerLink]="['actions']"
+      class="hover:text-black hover:text-lg font-medium text-base" routerLinkActive="active">Actions</a>
     </nav>
     <div class="hidden md:flex space-x-4 items-center">
       <button (click)="logoutButton()">Logout</button>
@@ -52,6 +54,9 @@
   class="hover:text-gray-200 font-semibold">Records</a>
   <a         [routerLink]="['user-details']"
   class="hover:text-gray-200 font-semibold">Register</a>
+  <a         [routerLink]="['actions']"
+  class="hover:text-gray-200 font-semibold">Actions</a>
+  <span class="font-semibold" (click)="logoutButton()">logout</span>
   </div>
   }
   
