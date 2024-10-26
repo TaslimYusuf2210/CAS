@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ActionComponent {
 
-  public activeTab: string = 'fund';
+  public activeTab: string = '';
 
   setActiveTab(tab:string){
     this.activeTab = tab;

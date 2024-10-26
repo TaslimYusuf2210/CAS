@@ -15,5 +15,7 @@ export interface recordsModel {
   state: string;
   ethnicity: string;
   religion: string;
+  dateCreated: string;
+  dateUpdated: string;
 }
 

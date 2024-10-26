@@ -44,6 +44,8 @@ export class RecordsComponent implements AfterViewInit {
     { header: 'lastName', columnDef: 'lastName' },
     { header: 'state', columnDef: 'state' },
     { header: 'gender', columnDef: 'gender', type: 'status'},
+    { header: 'dateCreated', columnDef: 'dateCreated'},
+    { header: 'dateUpdated', columnDef: 'dateUpdated'},
   ];
 
 

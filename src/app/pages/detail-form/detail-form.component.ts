@@ -197,11 +197,13 @@ export class DetailFormComponent implements OnInit {
     if(selectedIndex > -1) {
       let  selectedValue = value.find((a:recordsModel) => a.id === this.existingId)
       formData.id = selectedValue.id
+      formData.dateUpdated = new Date().toString()
       value[selectedIndex] = formData
       this.globalService.saveData('formEntries', value )
       alert('Form data updated successfully.')
     }else{
       formData.id =  Math.random().toString(36).substr(2, 9) + '-' + Date.now();
+      formData.dateCreated = new Date().toString()
   
       // Retrieve the existing data from local storage
       const storedData = this.globalService.getData('formEntries')

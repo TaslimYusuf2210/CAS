@@ -5,11 +5,12 @@
       <span>Please input the info of the funds you want to disburse</span>
       <div class="flex flex-col w-full">
         <label class="font-semibold" for="">Title</label>
-        <input formControlName="title" [(ngModel)]="title" class="border-solid border-black border-[1px] p-2 rounded" type="text">
-        @if ((f['title'].touched || f['title'].dirty) && f['title'].errors?.['required']) {
-          <span class="text-red-500">This field is required.
-          </span>
-        } 
+        <select class="border-solid border-black border-[1px] p-2 rounded" formControlName="title" [(ngModel)]="title">
+          <option value=""></option>
+          @for (item of fundDisbursementTypes; track $index) {
+            <option [value]="item.value">{{item.name}}</option>
+          }
+        </select>
       </div>
       <div class="flex flex-col w-full">
         <label class="font-semibold" for="">Description</label>
@@ -35,9 +36,15 @@
     </form>
   </div>
   <div class="w-full text-center flex flex-col gap-4 mt-8">
-    <header class="text-4xl">CAS</header>
-    <span>{{title}}</span>
-    <span>{{description}}</span>
-    <span>{{amount}}</span>
+    <div>
+      <app-generic-table
+      [dataList]="dataList"
+      [columnList]="columnList"
+      [actionMenu]="actionMenu"
+      >  
+      <!-- (onSelectdropdownMenu)="selectedActionButton($event)" -->
+      
+      </app-generic-table>
+      </div>
   </div>
 </div>
