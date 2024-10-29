@@ -5,6 +5,9 @@ import { NewpageComponent } from '../newpage/newpage.component';
 import { RecordsComponent } from '../pages/records/records.component';
 import { authGuard } from '../auth.guard';
 import { ActionComponent } from '../action/action.component';
+import { ActionRecordsComponent } from '../action-records/action-records.component';
+// import { DisbursementFormComponent } from '../action/fund-disbursement/disbursement-form/disbursement-form.component';
+import { DisbursementFormComponent } from '../action/fund-disbursement/disbursement-form/disbursement-form.component';
 
 export const layoutRoutes: Routes = [
   {
@@ -19,6 +22,7 @@ export const layoutRoutes: Routes = [
       { path: 'records/:id', component: DetailFormComponent, canActivate: [authGuard], },
       { path: 'user-details', component: DetailFormComponent, canActivate: [authGuard], },
       { path: 'actions', component: ActionComponent, canActivate: [authGuard], },
+      { path: 'disbursementForm', component: DisbursementFormComponent, canActivate: [authGuard], },
       { path: '**', redirectTo: 'dashboard' },
     ],
   },

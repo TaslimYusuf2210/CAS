@@ -28,11 +28,4 @@ export class GlobalService {
     return JSON.parse(localStorage.getItem(key) !)
   }
 
-  // update() {
-  //   const value = JSON.parse(localStorage.getItem('formEntries') || '')
-  //   let  selectedIndex = value.findIndex((a:recordsModel) => a.id === this.existingId)
-  //   if(selectedIndex > -1) {
-  //     value[selectedIndex] = this.myForm.value
-  //   }
-  // }
 }
