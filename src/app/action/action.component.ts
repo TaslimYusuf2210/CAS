@@ -1,19 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 // import { FundDisbursementComponent } from './fund-disbursement/fund-disbursement.component';
-import { PalliativeDistributionComponent } from './palliative-distribution/palliative-distribution.component';
 import { CommonModule } from '@angular/common';
 import { Column, GenericTableComponent, IActionMenu } from '../generic-table/generic-table.component';
-import { budgetModel } from '../action/fund-disbursement/budgetModel'
-import { Router } from '@angular/router';
+import { budgetModel } from './disbursement-form/budgetModel'
+import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog'
+import { DisbursementFormComponent } from './disbursement-form/disbursement-form.component';
+
 
 @Component({
   selector: 'app-action',
   standalone: true,
-  imports: [ PalliativeDistributionComponent, CommonModule, GenericTableComponent ],
+  imports: [  CommonModule, GenericTableComponent, MatDialogModule ],
   templateUrl: './action.component.html',
   styleUrl: './action.component.scss'
 })
-export class ActionComponent {
+export class ActionComponent implements AfterViewInit {
+
+  public existingId! : string
 
   public dataList: budgetModel[] = [];
   
@@ -35,11 +39,22 @@ export class ActionComponent {
   public columnList: Column[] = [
     { header: 'title', columnDef: 'title' },
     { header: 'amount', columnDef: 'amount' },
-    { header: 'description', columnDef: 'description' },
+    { header: 'disbursement Type', columnDef: 'disbursementType' },
+    { header: 'status', columnDef: 'status' },
   ];
 
-  constructor(public router: Router){
+  constructor(public router: Router, private route:ActivatedRoute, private dialog: MatDialog, private cdr: ChangeDetectorRef){
+  }
 
+  ngAfterViewInit(): void {
+    this.loadData()
+  }
+
+  openModal(){
+    this.dialog.open(DisbursementFormComponent, {
+      width: '50vw',
+      minHeight: 'auto'
+    })
   }
 
   selectedActionButton(event: any) {
@@ -53,7 +68,7 @@ export class ActionComponent {
   }
 
   view(e:budgetModel){
-    this.router.navigate([`cas/actionRecords/${e.id}`])
+    this.router.navigate([`cas/actionsRecord/${e.id}`])
   }
 
   onDelete(row:budgetModel){
@@ -61,6 +76,17 @@ export class ActionComponent {
     this.dataList.splice(index, 1)
     localStorage.setItem('fundDisbursementKey', JSON.stringify(this.dataList))
     this.dataList = JSON.parse(localStorage.getItem('fundDisbursementKey') || '')
+  }
+
+  loadData(){
+    const value = JSON.parse(localStorage.getItem('budgetKey') || '')
+    this.dataList = value;
+    this.cdr.detectChanges();
+  }
+
+  getData(){
+    const value = JSON.parse(localStorage.getItem('budgetKey') || '')
+    
   }
 
 

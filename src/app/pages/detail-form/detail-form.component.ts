@@ -194,12 +194,14 @@ export class DetailFormComponent implements OnInit {
       const formData = this.myForm.value as recordsModel;
       const value = this.globalService.getData('formEntries')
     let  selectedIndex = value.findIndex((a:recordsModel) => a.id === this.existingId)
+    console.log(selectedIndex)
     if(selectedIndex > -1) {
       let  selectedValue = value.find((a:recordsModel) => a.id === this.existingId)
       formData.id = selectedValue.id
       formData.dateUpdated = new Date().toString()
       value[selectedIndex] = formData
-      this.globalService.saveData('formEntries', value )
+      console.log(value)
+      this.globalService.saveData('formEntries', value)
       alert('Form data updated successfully.')
     }else{
       formData.id =  Math.random().toString(36).substr(2, 9) + '-' + Date.now();
@@ -212,6 +214,7 @@ export class DetailFormComponent implements OnInit {
   
       // Add the new form data to the array
       formEntries.push(formData);
+      console.log(formEntries)
   
       // Save the updated array back to local storage
       this.globalService.saveData('formEntries', formEntries)

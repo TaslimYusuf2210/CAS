@@ -62,18 +62,16 @@ export class RecordsComponent implements AfterViewInit {
   view (e:recordsModel){
     this.router.navigate([`cas/records/${e.id}`])
   }
+  
   getData(){
     const value = JSON.parse(localStorage.getItem('formEntries') || '')
     this.dataList = value;
   }
 
   onDelete(row:recordsModel){
-    console.log(row)
     let index = this.dataList.map((value, index) => value.id === row.id ? index: -1).filter((index) => index !== -1)[0]
-    console.log(index)
     this.dataList.splice(index, 1)
     localStorage.setItem('formEntries', JSON.stringify(this.dataList))
     this.dataList = JSON.parse(localStorage.getItem('formEntries') || '')
   }
-  
 }
