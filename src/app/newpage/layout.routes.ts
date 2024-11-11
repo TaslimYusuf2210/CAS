@@ -22,7 +22,7 @@ export const layoutRoutes: Routes = [
       { path: 'records/:id', component: DetailFormComponent, canActivate: [authGuard], },
       { path: 'user-details', component: DetailFormComponent, canActivate: [authGuard], },
       { path: 'actions', component: ActionComponent, canActivate: [authGuard], },
-      { path: 'actionsRecord/:id', component: ActionComponent, canActivate: [authGuard], },      
+      { path: 'actionsRecord/:id', component: DisbursementFormComponent, canActivate: [authGuard], },      
       { path: 'disbursementForm', component: DisbursementFormComponent, canActivate: [authGuard], },
       { path: '**', redirectTo: 'dashboard' },
     ],

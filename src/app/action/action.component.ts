@@ -29,6 +29,12 @@ export class ActionComponent implements AfterViewInit {
       class: '',
     },
     {
+      id: 3,
+      name: 'Edit',
+      icon: 'edit',
+      class: '',
+    },
+    {
       id: 2,
       name: 'Delete',
       icon: 'delete',
@@ -47,13 +53,14 @@ export class ActionComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.loadData()
+    this.getData()
   }
 
-  openModal(){
+  openModal(actionToDo: 'UPDATE'|'INSERT', data?:any,){
     this.dialog.open(DisbursementFormComponent, {
       width: '50vw',
-      minHeight: 'auto'
+      minHeight: 'auto',
+      data: {selectedRow: data, actionToDo:actionToDo}
     })
   }
 
@@ -65,6 +72,9 @@ export class ActionComponent implements AfterViewInit {
     }else if (selectedMenu.id === 2) {
       this.onDelete(selectedRow)
     }
+    else if (selectedMenu.id === 3) {
+      this.openModal('UPDATE', selectedRow)
+    }
   }
 
   view(e:budgetModel){
@@ -72,22 +82,20 @@ export class ActionComponent implements AfterViewInit {
   }
 
   onDelete(row:budgetModel){
-    let index = this.dataList.map((value, index) => value.id === row.id ? index: -1).filter((index) => index !== -1)[0]
+    let index = this.dataList.map((value, index) =>  value.id === row.id ? index: -1).filter((index) => index !== -1)[0]
     this.dataList.splice(index, 1)
-    localStorage.setItem('fundDisbursementKey', JSON.stringify(this.dataList))
-    this.dataList = JSON.parse(localStorage.getItem('fundDisbursementKey') || '')
+    localStorage.setItem('budgetKey', JSON.stringify(this.dataList))
+    this.dataList = JSON.parse(localStorage.getItem('budgetKey') || '')
   }
 
-  loadData(){
-    const value = JSON.parse(localStorage.getItem('budgetKey') || '')
-    this.dataList = value;
-    this.cdr.detectChanges();
-  }
+  // loadData(){
+  //   const value = JSON.parse(localStorage.getItem('budgetKey') || '')
+  //   this.dataList = value;
+  //   // this.cdr.detectChanges();
+  // }
 
   getData(){
     const value = JSON.parse(localStorage.getItem('budgetKey') || '')
-    
+    this.dataList = value;
   }
-
-
 }

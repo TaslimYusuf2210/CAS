@@ -33,6 +33,7 @@ export class AuthService {
     } 
       return false
   }
+  
 
   // Log out the user
   logout(): void {

@@ -1,4 +1,10 @@
-<div class="w-full flex justify-center px-4  bg-white">
+<div class="w-full flex flex-col justify-center px-4  bg-white">
+  @if (selectedValue) {
+    <div class="w-full flex gap-2 justify-end">
+      <button (click)="toggleForm()" class="bg-black hover:bg-white hover:text-black text-white font-semibold px-4 py-2 rounded-lg">Edit budget</button>
+      <button class="bg-black hover:bg-white hover:text-black text-white font-semibold px-4 py-2 rounded-lg">Add more</button>
+    </div>
+  }
   <form [formGroup]="disbursementForm" class="w-full grid gap-3 py-4" action="">
     <header class="font-semibold text-xl">Fund Disbursement Info</header>
     <span>Please input the info of the funds you want to disburse</span>

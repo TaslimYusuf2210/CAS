@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, inject, OnInit } from '@angular/core';
 import {
   ReactiveFormsModule,
   FormBuilder,
@@ -10,6 +10,7 @@ import { budgetModel } from './budgetModel';
 import { CommonModule } from '@angular/common';
 import { GlobalService } from '../../global.service';
 import { ActivatedRoute } from '@angular/router';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({
@@ -156,6 +157,7 @@ export class DisbursementFormComponent implements OnInit {
     disbursementType: ['', Validators.required],
     title: ['', Validators.required],
     description:['', Validators.required],
+    
   })
 
 
@@ -181,22 +183,37 @@ export class DisbursementFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.onTypeChange()
-    // this.budgetTypesFilter(this.title)
+    
   }
 
   public existingId!: string 
-  constructor(private fb: FormBuilder, private route:ActivatedRoute, public globalService: GlobalService){
-    let id;
-    this.route.params.subscribe({
-      next:(param ) => {
-        id = param['id']
-        if(id) {
-          this.renderData(id)
-        }
-      this.existingId = id
-      }
-    })
+  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data:any, private route:ActivatedRoute, public globalService: GlobalService){
+   console.log(data)
+
+   if(data.actionToDo === 'UPDATE') {
+    if (data.selectedRow.disbursementType === 'item') {
+      this.isItem = true
+      this.isNothing = false
+      this.disbursementForm.addControl('number', new FormControl(''));
+      this.disbursementForm.setValue({
+        disbursementType: data.selectedRow.disbursementType,
+        title: data.selectedRow.title,
+        description: data.selectedRow.description,
+        number: data.selectedRow.number,
+      })
+    } else {
+      this.isMoney = true
+      this.isNothing = false
+      this.disbursementForm.addControl('amount', new FormControl(''));
+      this.disbursementForm.setValue({
+        disbursementType: data.selectedRow.disbursementType,
+        title: data.selectedRow.title,
+        description: data.selectedRow.description,
+        amount: data.selectedRow.amount,
+      })
+    }
+    
+   }
   }
 
   toggleForm(){
@@ -208,33 +225,78 @@ export class DisbursementFormComponent implements OnInit {
     }
   }
 
+  findingIndex(a:budgetModel){
+    a.id === this.existingId
+    console.log(a.id)
+    console.log(this.existingId)
+  }
+
   onCreateBudget(){
-    console.log('button clicked')
-    if (this.disbursementForm.invalid) console.log('button invalid')
+    this.disbursementForm.markAllAsTouched()  
+    if (this.disbursementForm.invalid) return
     let formData: budgetModel = {
       ...this.disbursementForm.value,
       status: 'pending'
     }
     let existingData = this.globalService.getData('budgetKey')
     // let updatedData = existingData ? JSON.parse(existingData) : [];
-    let updatedData = []
+    // let updatedData = []
     console.log("works but doesn't reach condition")
     const value = this.globalService.getData('budgetKey')
-    let selectedIndex = value.findIndex((a:budgetModel) => a.id === this.existingId)
-    
-    if (existingData) {
-      updatedData = existingData
-      console.log(updatedData)
-      console.log("data exists")
-    } else {
-      updatedData = []
-    }
+    formData.id = Math.random().toString(36).substr(2,9)  + '-' + Date.now();
+    console.log(formData.id)
 
-    updatedData.push(formData )
-    this.globalService.saveData('budgetKey', updatedData)
-    alert('Budget successfully created')
-    location.reload()
-    console.log('Data saved Successfully', updatedData)
+    
+
+    let selectedIndex = value.findIndex((a:budgetModel) => a.id === formData.id)
+    console.log(selectedIndex)
+
+    // if a match is found
+    if(selectedIndex > -1) {
+      console.log('a match is found')
+      // returns the object that has the same ID as selectedIndex ID
+      let selectedValue = value.find((a:budgetModel) => a.id === formData.id)
+      formData.id = selectedValue.id
+      value[selectedIndex] = formData
+      console.log(value)
+      this.globalService.saveData('budgetKey', value)
+      alert('Form data updated successfully')
+    } else {
+
+      let updatedData = existingData ? existingData : []
+      updatedData.push(formData)
+      console.log('data being sent to database', updatedData)
+      this.globalService.saveData('budgetKey', updatedData)
+      console.log('Data saved Successfully')
+      alert('Budget successfully created')
+      location.reload()
+    }
+    
+    // if(selectedIndex > -1) {
+    //   console.log('selectedIndex is less than -1')
+    //   let selectedValue = value.find((a:budgetModel) => a.id === this.existingId)
+    //   formData.id = selectedValue.id
+    //   value[selectedIndex] = formData
+    //   console.log(value)
+    //   this.globalService.saveData('budgetKey', value)
+    //   alert('Form data updated successfully')
+    // } else
+    
+    // if (existingData) {
+    //   updatedData = existingData
+    //   console.log(updatedData)
+    //   console.log("data exists")
+    // } else {
+    //   updatedData = []
+    // }
+
+    // formData.id = Math.random().toString(36).substr(2,9)
+    // console.log(formData.id)
+    // updatedData.push(formData )
+    // this.globalService.saveData('budgetKey', updatedData)
+    // console.log('Data saved Successfully', updatedData)
+    // alert('Budget successfully created')
+    // location.reload()
   }
 
   onTypeChange(event:any) {
@@ -287,6 +349,7 @@ export class DisbursementFormComponent implements OnInit {
     const value = JSON.parse(localStorage.getItem('budgetKey') || '')
     let selectedValue = value.find((item:budgetModel) => item.id === id)
     if (selectedValue) {
+      console.log(selectedValue)
       this.disbursementForm.patchValue(selectedValue)
       this.disbursementForm.disable()
       this.selectedValue = selectedValue
@@ -295,3 +358,5 @@ export class DisbursementFormComponent implements OnInit {
   }
 
 }
+
+

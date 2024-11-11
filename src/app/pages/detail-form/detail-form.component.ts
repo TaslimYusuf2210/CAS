@@ -150,7 +150,7 @@ export class DetailFormComponent implements OnInit {
   }
 
   clearStorage(){
-    localStorage.clear()
+    // localStorage.removeItem()
   }
 
   // getLgaByStateCode(stateCode:string) {
@@ -188,9 +188,7 @@ export class DetailFormComponent implements OnInit {
 
   onSubmit() {
     this.myForm.markAllAsTouched()  
-    // Check if the form is valid
     if (this.myForm.invalid) return;
-      // Get the values entered in the form (without the form object itself)
       const formData = this.myForm.value as recordsModel;
       const value = this.globalService.getData('formEntries')
     let  selectedIndex = value.findIndex((a:recordsModel) => a.id === this.existingId)
