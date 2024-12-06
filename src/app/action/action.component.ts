@@ -77,6 +77,7 @@ export class ActionComponent implements AfterViewInit {
     }
   }
 
+
   view(e:budgetModel){
     this.router.navigate([`cas/actionsRecord/${e.id}`])
   }

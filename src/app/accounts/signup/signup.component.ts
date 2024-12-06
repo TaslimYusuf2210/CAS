@@ -47,10 +47,12 @@ export class SignupComponent {
   onSubmit() {
     if (this.signupForm.invalid) return;
 
+    console.log('submitted')
+
     const formData = this.signupForm.value as SignupI;
 
     // Retrieve the existing data from localStorage
-    const existingData = localStorage.getItem('signupDetails');
+    const existingData = this.globalService.getData('signupDetails');
     console.log(existingData)
 
     // Initialize an array to hold the data (existing + new)
@@ -64,20 +66,26 @@ export class SignupComponent {
 
       if (existingData) {
        
-        try {
-          // Parse the existing data if it exists and is valid JSON
-          updatedData = JSON.parse(existingData);
+        // try {
+        //   // Parse the existing data if it exists and is valid JSON
+          updatedData = existingData;
           console.log(updatedData)
 
           // Ensure updatedData is an array, otherwise initialize it as an empty array
           if (!Array.isArray(updatedData)) {
             updatedData = [];
           }
-        } catch (error) {
-          console.error('Error parsing localStorage data', error);
-          updatedData = []; // Reset to an empty array if parsing fails
-        }
-        let checkEmailExist = updatedData.filter((a) => a.email.toLowerCase() === email.toLowerCase())
+
+        // } catch (error) {
+        //   console.error('Error parsing localStorage data', error);
+        //   updatedData = []; // Reset to an empty array if parsing fails
+        // }
+        
+
+      } else {
+        updatedData = []
+      }
+      let checkEmailExist = updatedData.filter((a) => a.email.toLowerCase() === email.toLowerCase())
         console.log(checkEmailExist)
 
         if (checkEmailExist.length < 1) {
@@ -94,8 +102,6 @@ export class SignupComponent {
           alert('Users exist')
           
         }
-
-      }
     } else {
       this.confirmUser = true;
       alert("We couldn't confirm your password")

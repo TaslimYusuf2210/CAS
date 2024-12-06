@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { GlobalService } from '../../global.service';
 import { ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { isNumber } from '@amcharts/amcharts5/.internal/core/util/Type';
 
 
 @Component({
@@ -190,6 +191,7 @@ export class DisbursementFormComponent implements OnInit {
   constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data:any, private route:ActivatedRoute, public globalService: GlobalService){
    console.log(data)
 
+  //  populating
    if(data.actionToDo === 'UPDATE') {
     if (data.selectedRow.disbursementType === 'item') {
       this.isItem = true
@@ -201,6 +203,7 @@ export class DisbursementFormComponent implements OnInit {
         description: data.selectedRow.description,
         number: data.selectedRow.number,
       })
+      this.isItem = true 
     } else {
       this.isMoney = true
       this.isNothing = false
@@ -211,8 +214,10 @@ export class DisbursementFormComponent implements OnInit {
         description: data.selectedRow.description,
         amount: data.selectedRow.amount,
       })
+      this.isMoney = true
     }
     
+    this.disbursementForm.get('disbursementType')?.disable()
    }
   }
 
@@ -231,7 +236,7 @@ export class DisbursementFormComponent implements OnInit {
     console.log(this.existingId)
   }
 
-  onCreateBudget(){
+  createBudget(){
     this.disbursementForm.markAllAsTouched()  
     if (this.disbursementForm.invalid) return
     let formData: budgetModel = {
@@ -242,26 +247,9 @@ export class DisbursementFormComponent implements OnInit {
     // let updatedData = existingData ? JSON.parse(existingData) : [];
     // let updatedData = []
     console.log("works but doesn't reach condition")
-    const value = this.globalService.getData('budgetKey')
     formData.id = Math.random().toString(36).substr(2,9)  + '-' + Date.now();
     console.log(formData.id)
 
-    
-
-    let selectedIndex = value.findIndex((a:budgetModel) => a.id === formData.id)
-    console.log(selectedIndex)
-
-    // if a match is found
-    if(selectedIndex > -1) {
-      console.log('a match is found')
-      // returns the object that has the same ID as selectedIndex ID
-      let selectedValue = value.find((a:budgetModel) => a.id === formData.id)
-      formData.id = selectedValue.id
-      value[selectedIndex] = formData
-      console.log(value)
-      this.globalService.saveData('budgetKey', value)
-      alert('Form data updated successfully')
-    } else {
 
       let updatedData = existingData ? existingData : []
       updatedData.push(formData)
@@ -270,33 +258,37 @@ export class DisbursementFormComponent implements OnInit {
       console.log('Data saved Successfully')
       alert('Budget successfully created')
       location.reload()
-    }
-    
-    // if(selectedIndex > -1) {
-    //   console.log('selectedIndex is less than -1')
-    //   let selectedValue = value.find((a:budgetModel) => a.id === this.existingId)
-    //   formData.id = selectedValue.id
-    //   value[selectedIndex] = formData
-    //   console.log(value)
-    //   this.globalService.saveData('budgetKey', value)
-    //   alert('Form data updated successfully')
-    // } else
-    
-    // if (existingData) {
-    //   updatedData = existingData
-    //   console.log(updatedData)
-    //   console.log("data exists")
-    // } else {
-    //   updatedData = []
-    // }
+  }
 
-    // formData.id = Math.random().toString(36).substr(2,9)
-    // console.log(formData.id)
-    // updatedData.push(formData )
-    // this.globalService.saveData('budgetKey', updatedData)
-    // console.log('Data saved Successfully', updatedData)
-    // alert('Budget successfully created')
-    // location.reload()
+  updateBudget(){
+    if (this.disbursementForm.invalid) return
+    let data = this.globalService.getData('budgetKey')
+    let formData = this.disbursementForm.value as budgetModel
+    console.log(formData)
+    console.log(this.data.selectedRow)
+
+    let dataIndex = data.findIndex((value:any) =>  value.id === this.data.selectedRow.id )
+    console.log(dataIndex)
+    data[dataIndex].disbursementType = this.data.selectedRow.disbursementType;
+    data[dataIndex].title = formData.title;
+    data[dataIndex].description = formData.description;
+    if (this.data.selectedRow.disbursementType === 'money') {
+      data[dataIndex].amount = formData.amount;
+    } else {
+      data[dataIndex].number = this.data.selectedRow.number;
+    }
+    console.log(data)
+    this.globalService.saveData('budgetKey', data)
+    location.reload()
+  }
+
+  submit(){
+    console.log(this.data.actionToDo)
+    if(this.data.actionToDo === "INSERT"){
+      this.createBudget()
+    } else {
+      this.updateBudget()
+    }
   }
 
   onTypeChange(event:any) {

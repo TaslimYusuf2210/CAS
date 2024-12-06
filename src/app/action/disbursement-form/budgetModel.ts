@@ -5,4 +5,5 @@ export interface budgetModel {
   amount?: number,
   number?: number,
   status: string,
+  disbursementType: string
 }
