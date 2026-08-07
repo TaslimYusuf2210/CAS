@@ -44,7 +44,7 @@ export class ActionComponent implements AfterViewInit {
 
   public columnList: Column[] = [
     { header: 'title', columnDef: 'title' },
-    { header: 'amount', columnDef: 'amount' },
+    { header: 'value', columnDef: 'value' },
     { header: 'disbursement Type', columnDef: 'disbursementType' },
     { header: 'status', columnDef: 'status' },
   ];
@@ -97,6 +97,8 @@ export class ActionComponent implements AfterViewInit {
 
   getData(){
     const value = JSON.parse(localStorage.getItem('budgetKey') || '')
+    console.log(value);
+    
     this.dataList = value;
   }
 }

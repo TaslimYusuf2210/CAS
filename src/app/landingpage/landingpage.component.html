@@ -1,7 +1,42 @@
-<div class="min-h-screen bg-one px-20 darken">
+<div class="min-h-screen bg-no-repeat bg-cover bg-[url('https://c1.wallpaperflare.com/preview/284/231/788/turn-on-turn-off-energy-power.jpg')] px-10 darken">
   <app-navbar></app-navbar>
   <div class="mt-[200px]">
-  <p class="font-semibold text-8xl text-white tracking-widest">Count In <br> Numbers</p>
+  <p class="font-semibold text-8xl text-white tracking-widest">Census Automated<br>System</p>
   </div>
+</div>
+<div class="flex items-start mt-8">
+  <div class="flex flex-col justify-center items-center text-center w-full">
+    <img class="h-40 w-40" [src]="census" alt="">
+    <p class="text-2xl font-semibold text-green-600">CENSUS ENUMERATION</p>
+  </div>
+  <div class="flex flex-col justify-center items-center text-center w-full">
+    <img class="h-40 w-40" [src]="registration" alt="">
+    <p class="text-2xl font-semibold text-green-600">CIVIL REGISTRATION AND VITAL STATISTICS</p>
+  </div>
+  <div class="flex flex-col justify-center items-center text-center w-full">
+    <img class="h-40 w-40" [src]="survey" alt="">
+    <p class="text-2xl font-semibold text-green-600">SURVEY DATA</p>
+  </div>
+  <div class="flex flex-col justify-center items-center text-center w-full">
+    <img class="h-40 w-40" [src]="management" alt="">
+    <p class="text-2xl font-semibold text-green-600">POPULATION MANAGEMENT</p>
+  </div>
+</div>
+<div class="text-center mt-8 px-4">
+  <span class="text-2xl font-medium">OUR PARTNERS</span>
+  <div class="flex items-center">
+    <div class="w-full">
+      <img class="w-full" [src]="unicef" alt="">
+    </div>
+    <div class="w-full">
+      <img class="w-full" [src]="unfpa" alt="">
+    </div>
+    <div class="w-full">
+      <img class="w-full" [src]="grid" alt="">
+    </div>
+    <div class="w-full">
+      <img class="w-full" [src]="usaid" alt="">
+    </div>
+</div>
 </div>
 

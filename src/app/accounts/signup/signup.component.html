@@ -1,6 +1,9 @@
 
 <div class="flex justify-center items-center bg-slate-300 h-screen w-full">
-  <form [formGroup]="signupForm" class="p-6 w-full grid grid-cols-1 space-y-6" action="">
+  <form [formGroup]="signupForm" class="p-6 w-full grid grid-cols-1 gap-6" action="">
+    <div class="text-left">
+      <span class="text-4xl">Sign up</span>
+    </div>
     <div class="flex flex-col w-full">
       <label class="font-semibold" for="firstname">Firstname</label>
       <input formControlName="firstName" class="w-full p-4 rounded" placeholder="Firstname" type="text">
@@ -44,9 +47,9 @@
         </span>
       }
     </div>
-    <div class="w-full text-center">
-      <button (click)="onSubmit()" class="bg-green-500 text-white py-4 font-semibold rounded w-1/4 cursor-pointer hover:bg-green-600" type="submit">Sign Up</button>
-      <p class="text-blue-500">I'm already a member! <strong>Login</strong></p>
+    <div class="w-full text-center flex flex-col gap-2 mt-4">
+      <button (click)="onSubmit()" class="bg-green-500 text-white text-xl py-4 font-semibold rounded w-full cursor-pointer hover:bg-green-600" type="submit">Sign Up</button>
+      <p class="text-blue-500 ">I'm already a member! <strong class="cursor-pointer" (click)="openLoginModal()">Login</strong></p>
       <div *ngIf="confirmUser == true" class="text-red-500 font-medium"><p>Sorry, we couldn't confirm your password</p></div>
     </div>
   </form>

@@ -196,7 +196,7 @@ export class DisbursementFormComponent implements OnInit {
     if (data.selectedRow.disbursementType === 'item') {
       this.isItem = true
       this.isNothing = false
-      this.disbursementForm.addControl('number', new FormControl(''));
+      this.disbursementForm.addControl('value', new FormControl(''));
       this.disbursementForm.setValue({
         disbursementType: data.selectedRow.disbursementType,
         title: data.selectedRow.title,
@@ -207,7 +207,7 @@ export class DisbursementFormComponent implements OnInit {
     } else {
       this.isMoney = true
       this.isNothing = false
-      this.disbursementForm.addControl('amount', new FormControl(''));
+      this.disbursementForm.addControl('value', new FormControl(''));
       this.disbursementForm.setValue({
         disbursementType: data.selectedRow.disbursementType,
         title: data.selectedRow.title,
@@ -273,7 +273,7 @@ export class DisbursementFormComponent implements OnInit {
     data[dataIndex].title = formData.title;
     data[dataIndex].description = formData.description;
     if (this.data.selectedRow.disbursementType === 'money') {
-      data[dataIndex].amount = formData.amount;
+      data[dataIndex].amount = formData.value;
     } else {
       data[dataIndex].number = this.data.selectedRow.number;
     }
@@ -296,16 +296,16 @@ export class DisbursementFormComponent implements OnInit {
   
       if (value == 'money') {
         this.isMoney = true
-        this.disbursementForm.addControl('amount', new FormControl(''));
+        this.disbursementForm.addControl('value', new FormControl(''));
         this.isItem = false
-        this.disbursementForm.removeControl('number');
+        // this.disbursementForm.removeControl('number');
         this.isNothing = false
 
       } else if (value == 'item') {
         this.isItem = true
-        this.disbursementForm.addControl('number', new FormControl(''));
+        this.disbursementForm.addControl('value', new FormControl(''));
         this.isMoney = false
-        this.disbursementForm.removeControl('amount');
+        // this.disbursementForm.removeControl('amount');
         this.isNothing = false
         // this.toggleSelect()
       }

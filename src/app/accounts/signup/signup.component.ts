@@ -107,4 +107,9 @@ export class SignupComponent {
       alert("We couldn't confirm your password")
     }
   }
+
+  openLoginModal(){
+    this.dialogRef.close()
+    this.openLogin()
+  }
 }

@@ -6,8 +6,8 @@
     </div>
   }
   <form [formGroup]="disbursementForm" class="w-full grid gap-3 py-4" action="">
-    <header class="font-semibold text-xl">Fund Disbursement Info</header>
-    <span>Please input the info of the funds you want to disburse</span>
+    <header class="font-semibold text-xl">Disbursement Info</header>
+    <span>Please input the info of the disbursement you want to make</span>
     <div class="flex flex-col w-full">
       <label class="font-semibold" for="">Disbursement Type</label>
       <select (change)="onTypeChange($event)" class="border-solid border-black border-[1px] p-2 rounded" formControlName="disbursementType">
@@ -53,17 +53,17 @@
       } 
     </div>
     <div *ngIf="isMoney" class="flex flex-col w-full">
-      <label class="font-semibold" for="">Amount(In Naira)</label>
-      <input  formControlName="amount" class="border-solid border-black border-[1px] p-2 rounded" type="number">
-      @if ((f['amount'].touched || f['amount'].dirty) && f['amount'].errors?.['required']) {
+      <label class="font-semibold" for="">Value(In Naira)</label>
+      <input  formControlName="value" class="border-solid border-black border-[1px] p-2 rounded" type="number">
+      @if ((f['value'].touched || f['value'].dirty) && f['value'].errors?.['required']) {
         <span class="text-red-500 ">This field is required.
         </span>
       } 
     </div>
     <div *ngIf="isItem " class="flex flex-col w-full">
-      <label class="font-semibold" for="">Number(In bags)</label>
-      <input  formControlName="number" class="border-solid border-black border-[1px] p-2 rounded" type="number">
-      @if ((f['number'].touched || f['number'].dirty) && f['number'].errors?.['required']) {
+      <label class="font-semibold" for="">Value(In bags)</label>
+      <input  formControlName="value" class="border-solid border-black border-[1px] p-2 rounded" type="number">
+      @if ((f['value'].touched || f['value'].dirty) && f['value'].errors?.['required']) {
         <span class="text-red-500 ">This field is required.
         </span>
       } 

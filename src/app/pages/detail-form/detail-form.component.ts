@@ -188,6 +188,8 @@ export class DetailFormComponent implements OnInit {
 
   onSubmit() {
     this.myForm.markAllAsTouched()  
+    console.log('working');
+    
     if (this.myForm.invalid) return;
       const formData = this.myForm.value as recordsModel;
       const value = this.globalService.getData('formEntries')
@@ -196,14 +198,14 @@ export class DetailFormComponent implements OnInit {
     if(selectedIndex > -1) {
       let  selectedValue = value.find((a:recordsModel) => a.id === this.existingId)
       formData.id = selectedValue.id
-      formData.dateUpdated = new Date().toString()
+      formData.dateUpdated = new Date().toString().split(' GMT')[0]
       value[selectedIndex] = formData
       console.log(value)
       this.globalService.saveData('formEntries', value)
       alert('Form data updated successfully.')
     }else{
       formData.id =  Math.random().toString(36).substr(2, 9) + '-' + Date.now();
-      formData.dateCreated = new Date().toString()
+      formData.dateCreated = new Date().toString().split(' GMT')[0]
   
       // Retrieve the existing data from local storage
       const storedData = this.globalService.getData('formEntries')
@@ -216,6 +218,7 @@ export class DetailFormComponent implements OnInit {
   
       // Save the updated array back to local storage
       this.globalService.saveData('formEntries', formEntries)
+      alert('Registration Successful')
       console.log('Form data saved successfully.', this.myForm.value);}
     
   }

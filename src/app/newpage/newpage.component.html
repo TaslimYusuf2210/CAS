@@ -3,9 +3,9 @@
     <div class="flex items-center w-[200px] space-x-2">
       <span
       [routerLink]="['dashboard']"
-      class="md:h-[70px] w-[180px] !md:w-[400px] h-[50px] cursor-pointer font-bold font-explora text-5xl"
+      class="md:h-[70px] w-[180px] !md:w-[400px] h-[50px] cursor-pointer font-bold font-explora text-5xl grid place-items-center"
       >
-        cas
+        <img src="../../assets/images/logo.png" alt="">
       </span>
     </div>
 
@@ -16,10 +16,10 @@
       <a         [routerLink]="['user-details']"
       class="hover:text-black hover:text-lg font-medium text-base" routerLinkActive="active">Register</a>
       <a         [routerLink]="['actions']"
-      class="hover:text-black hover:text-lg font-medium text-base" routerLinkActive="active">Actions</a>
+      class="hover:text-black hover:text-lg font-medium text-base" routerLinkActive="active">Budget</a>
     </nav>
     <div class="hidden md:flex space-x-4 items-center">
-      <button (click)="logoutButton()">Logout</button>
+      <button class="bg-gray-700 hover:bg-gray-950 p-2 text-white font-semibold rounded-md" (click)="logoutButton()">Logout</button>
     </div>
 
     <button class="md:hidden focus:outline-none" (click)="toggleMenu()">
@@ -47,7 +47,7 @@
   @if (    isMenuOpen
   ) {
     <div
-    class="md:hidden bg-[#12bcf0] text-white space-y-4 px-4 py-2 flex flex-col items-end"
+    class="md:hidden bg-white text-black space-y-4 px-4 py-2 flex flex-col items-end"
   >
   <a [routerLink]="['Dashboard']" class="hover:text-gray-200 font-semibold">Dashboard</a>
   <a         [routerLink]="['records']"
@@ -55,7 +55,7 @@
   <a         [routerLink]="['user-details']"
   class="hover:text-gray-200 font-semibold">Register</a>
   <a         [routerLink]="['actions']"
-  class="hover:text-gray-200 font-semibold">Actions</a>
+  class="hover:text-gray-200 font-semibold">Budget</a>
   <span class="font-semibold" (click)="logoutButton()">logout</span>
   </div>
   }
